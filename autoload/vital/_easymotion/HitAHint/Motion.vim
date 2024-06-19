@@ -471,7 +471,7 @@ endfunction
 function! s:undo_lock.undobreak() abort
   let old_undolevels = &l:undolevels
   setlocal undolevels=-1
-  keepjumps call setline('.', getline('.'))
+  keepjumps py3 vim.current.buffer[vim.current.window.cursor[0]-1]=vim.current.line
   let &l:undolevels = old_undolevels
 endfunction
 
@@ -796,7 +796,7 @@ endfunction
 
 function! s:setline(lnum, text) abort
   if getline(a:lnum) isnot# a:text
-    call setline(a:lnum, a:text)
+    py3 vim.current.buffer[int(vim.eval("a:lnum")) -1] = vim.eval("a:text")
   endif
 endfunction
 

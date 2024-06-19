@@ -495,7 +495,7 @@ endfunction "}}}
 " -- Draw --------------------------------
 function! s:SetLines(lines, key) " {{{
     for [line_num, line] in a:lines
-        keepjumps call setline(line_num, line[a:key])
+        keepjumps py3 vim.current.buffer[int(vim.eval("line_num")) -1] = vim.eval("line[a:key]")
     endfor
 endfunction " }}}
 
